@@ -1,0 +1,207 @@
+/* Configuración de fuentes */
+@font-face {
+  font-family: Iosevka;
+  src: url("./fonts/Iosevka-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Iosevka;
+  src: url("/assets/fonts/Iosevka-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Iosevka;
+  src: url("/assets/fonts/Iosevka-ExtraBold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Iosevka;
+  src: url("/assets/fonts/Iosevka-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Iosevka;
+  src: url("/assets/fonts/Iosevka-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Variables globales */
+:root {
+  --ff: Iosevka;
+
+  --primary-color: #007bff;
+  --accent-color: #6c757d;
+  --muted-color: rgba(0, 0, 0, 0.50);
+}
+
+/* Estilos generales */
+body {
+  font-family: var(--ff);
+  font-weight: 400;
+  max-width: 90%;
+  margin: 0 auto;
+  height: 100%;
+}
+
+h2 {
+  font-size: 48px;
+  text-wrap: wrap;
+  font-weight: 700;
+}
+
+strong {
+  color: var(--primary-color)
+}
+
+img {
+  width: 100%;
+  display: block;
+}
+
+/* Diseño de la cuadrícula */
+.grid {
+  display: flex;
+  height: 100vh;
+}
+
+.col-left {
+  width: 25%;
+  flex-shrink: 0;
+}
+
+.col-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.col-right {
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Espaciado y utilidades */
+.padding-x {
+  padding: 0 1.75rem;
+}
+
+.text-muted {
+  color: var(--muted-color);
+}
+
+/* Estilos de enlaces y botones */
+.button,
+a:visited[href="/"] {
+  color: var(--primary-color);
+  text-decoration: none;
+  margin: 2rem 0;
+  display: block;
+}
+
+.button.with-icon {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+
+  & > svg {
+    color: inherit
+  }
+}
+
+a:visited {
+  color: var(--accent-color);
+}
+
+/* Listas y publicaciones / Publicación individual */
+ul {
+  padding-inline: 0;
+}
+
+.post-listed {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+
+  & > a {
+    text-wrap: pretty;
+  }
+}
+
+.post-listed>a {
+  margin-bottom: 0.5rem;
+  color: rgb(0, 0, 0);
+  font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: underline;
+}
+
+.post-listed>small {
+  color: rgba(0, 0, 0, 0.50);
+  font-size: 0.95rem;
+}
+
+.post {
+  & .title-post {
+    margin-bottom: 0;
+    font-size: 2rem;
+  }
+
+  & .post-content {
+    display: block;
+    margin-top: 3rem;
+
+    & h2 {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.tags {
+  background-color: var(--primary-color);
+  color: #fff;
+  padding-inline: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  footer {
+    display: none;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .col-left {
+    height: fit-content;
+  }
+
+  .col-right {
+    height: auto;
+  }
+
+  .padding-x {
+    padding-inline: 0;
+  }
+}
