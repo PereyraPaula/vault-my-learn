@@ -72,6 +72,17 @@ img {
   display: block;
 }
 
+ul {
+  list-style: none;
+  padding-inline: 0;
+}
+
+time {
+  color: var(--muted-color);
+  font-size: small;
+  margin: 8px 0;
+}
+
 /* Diseño de la cuadrícula */
 .grid {
   display: flex;
@@ -104,13 +115,25 @@ img {
   color: var(--muted-color);
 }
 
+.uppercase {
+  text-transform: uppercase;
+}
+
 /* Estilos de enlaces y botones */
 .button,
 a:visited[href="/"] {
-  color: var(--primary-color);
-  text-decoration: none;
   margin: 2rem 0;
+  color: var(--primary-color);
   display: block;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+a.tags:visited {
+  color: white;
 }
 
 .button.with-icon {
@@ -118,7 +141,7 @@ a:visited[href="/"] {
   align-items: center;
   column-gap: 10px;
 
-  & > svg {
+  &>svg {
     color: inherit
   }
 }
@@ -127,18 +150,20 @@ a:visited {
   color: var(--accent-color);
 }
 
-/* Listas y publicaciones / Publicación individual */
-ul {
-  padding-inline: 0;
+.list-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
+/* Listas y publicaciones / Publicación individual */
+
 .post-listed {
-  list-style: none;
   display: flex;
   flex-direction: column;
   padding: 1rem;
 
-  & > a {
+  &>a {
     text-wrap: pretty;
   }
 }
@@ -180,6 +205,22 @@ ul {
   padding-bottom: 0.25rem;
   cursor: pointer;
   text-transform: uppercase;
+}
+
+.title-subpage {
+  text-transform: uppercase;
+  margin-top: 32px;
+}
+
+.list-posts-archive {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  & a {
+    color: var(--primary-color);
+    font-weight: 600;
+  }
 }
 
 /* Estilos responsivos */

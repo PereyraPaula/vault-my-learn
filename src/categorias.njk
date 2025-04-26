@@ -1,0 +1,11 @@
+---
+title: Listado de Categorías
+permalink: /categorias/
+layout: "layouts/single.njk"
+---
+
+<ul class="list-tags">
+    {% for categoria in collections.categories %}
+    <li><a class="tags" href="/categoria/{{ categoria | slug }}/">{{ categoria }}</a></li>
+    {% endfor %}
+</ul>

@@ -5,30 +5,19 @@
     <main class="grid">
       {% include 'blocks/header.njk' %}
       <section class="col-right padding-x">
-        <main class="post">
-          <h1 class="title-post">{{ title }}</h1>
-          <p class="text-muted">
-            <em>Publicado el {{ date | fecha("dd 'de' LLLL yyyy") }}</em> 
-            <em>{% if site.author %} - por {{ site.author }}{% endif %}</em>
-          </p>
-          {% if tags %}
-          <p>
-            Etiquetas:
-            {% for tag in tags %}
-            <span class="tags">{{ tag }}</span>
-            {% if not loop.last %}
-            {% endif %}
-            {% endfor %}
-          </p>
-          {% endif %}
-          <div class="post-content">
-            {{ content | safe }}
-          </div>
+        <h1 class="title-subpage">{{ title }}</h1>
+        <main>
+          {{ content | safe }}
         </main>
         <a href="/" class="button with-icon">
-          <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M5 12h14M5 12l6-6m-6 6 6 6" style="--darkreader-inline-stroke:var(--darkreader-text-000000, #e8e6e3)" />
+          <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24">
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 12h14M5 12l6-6m-6 6 6 6"
+              style="--darkreader-inline-stroke:var(--darkreader-text-000000, #e8e6e3)"/>
           </svg>
           Volver a la pagina principal
         </a>

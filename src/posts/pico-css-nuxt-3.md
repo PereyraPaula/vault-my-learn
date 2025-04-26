@@ -1,5 +1,5 @@
 ---
-layout: "layouts/single.njk"
+layout: "layouts/single-post.njk"
 title: "Vue 3 - Pico.css - Agregar el Minimal CSS Framework a Nuxt 3"
 date: 2024-02-26
 tags: [vue, picocss, css, web]

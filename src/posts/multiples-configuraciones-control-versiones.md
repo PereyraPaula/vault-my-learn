@@ -1,5 +1,5 @@
 ---
-layout: "layouts/single.njk"
+layout: "layouts/single-post.njk"
 title: "Gestionar múltiples configuraciones de servicios de control de versiones (GIT)"
 date: 2025-01-07
 tags: [git]

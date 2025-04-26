@@ -1,0 +1,22 @@
+---
+eleventyComputed:
+  title: "Posts en la categoría: {{ category }}"
+pagination:
+  data: collections.categories
+  size: 1
+  alias: category
+permalink: "/categoria/{{ category | slug }}/"
+layout: "layouts/single.njk"
+---
+
+<ul class="list-posts-archive">
+    {% for post in collections.posts | reverse %}
+        {% if post.data.tags and post.data.tags.includes(category) %}
+            <li>
+                <time datetime="{{ post.date | fecha("localString") }}">{{ post.date | fecha("localString") }}</time>
+                -
+                <a class="uppercase" href="{{ post.url }}">{{ post.data.title }}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>

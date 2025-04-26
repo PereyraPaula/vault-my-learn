@@ -1,10 +1,11 @@
 <section class="list-posts col-right">
   <ul>
-    {% for post in collections.posts %}
-    <li class="post-listed">
-      <a href="{{ post.url }}">{{ post.data.title }}</a>
-      <small>{{ post.data.description }}</small>
-    </li>
+    {% for post in collections.posts | reverse %}
+      <li class="post-listed">
+        <time datetime="{{ post.date | fecha("localString") }}">{{ post.date | fecha("localString") }}</time>
+        <a href="{{ post.url }}">{{ post.data.title }}</a>
+        <small>{{ post.data.description }}</small>
+      </li>
     {% endfor %}
   </ul>
 </section>

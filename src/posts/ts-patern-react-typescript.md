@@ -1,8 +1,8 @@
 ---
-layout: "layouts/single.njk"
+layout: "layouts/single-post.njk"
 title: "ts-pattern - Explicado de manera sencilla"
 date: 2025-04-21
-tags: [react, javascript, typescript]
+tags: [react, javascript, typescript, web]
 description: "Poder trabajar con condicionales de manera más limpia visualmente."
 ---
 
