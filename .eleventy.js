@@ -1,11 +1,23 @@
 import { compile } from "@mdx-js/mdx";
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import rehypeStringify from "rehype-stringify";
 import { DateTime } from "luxon";
+import { unified } from "unified";
+import rehypeStringify from "rehype-stringify";
+import remarkParse from "remark-parse";
+import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 
 export default function (eleventyConfig) {
-  eleventyConfig.addPassthroughCopy("src/assets/main.css");
+  eleventyConfig.addPlugin(syntaxHighlight, {
+    template: ({ content, language }) => {
+      return `
+        <div class="code-wrapper">
+          <pre class="language-${language}">
+            <code>${content}</code>
+          </pre>
+        </div>
+        `;
+    }
+  });
+  eleventyConfig.addPassthroughCopy({ "src/assets/css": "assets/css" });
   eleventyConfig.addPassthroughCopy({ "src/assets/js": "assets/js" });
   eleventyConfig.addPassthroughCopy({ "src/assets/fonts": "assets/fonts" });
   eleventyConfig.addPassthroughCopy({ "src/assets/img": "assets/img" });

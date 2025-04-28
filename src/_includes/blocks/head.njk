@@ -1,6 +1,9 @@
 <head>
   <meta charset="UTF-8" />
-  <link rel="stylesheet" href="/assets/main.css" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
   <title>{{ title if title else site.title }}</title>
+  {% if page.url.includes("/posts/") %}
+    <link href="/assets/css/prism-ghcolors.css" rel="stylesheet" />
+  {% endif %}
   <meta name="description" content="{{ site.description }}" />
 </head>

@@ -246,3 +246,43 @@ a:visited {
     padding-inline: 0;
   }
 }
+
+/* Boton copiar code */
+
+.code-wrapper {
+  position: relative;
+}
+
+.relative-code-block {
+  position: relative;
+}
+
+.copy-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 6px;
+  cursor: pointer;
+  transition: background 0.3s, border-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copy-button:hover {
+  background: #fff;
+  border-color: #999;
+}
+
+.copy-button svg {
+  display: block;
+}
+
+.copy-button.copied {
+  background: #007bff;
+  border-color: #0065d1;
+  color: white
+}
