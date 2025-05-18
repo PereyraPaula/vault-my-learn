@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "eleventy",
+    "build": "eleventy --output=docs",
     "start": "rm -Rf dist && eleventy --serve"
   },
   "keywords": [],
