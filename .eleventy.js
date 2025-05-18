@@ -6,48 +6,11 @@ import remarkParse from "remark-parse";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 
 export default function (eleventyConfig) {
-  eleventyConfig.addPlugin(syntaxHighlight, {
-    template: ({ content, language }) => {
-      return `
-        <div class="code-wrapper">
-          <pre class="language-${language}">
-            <code>${content}</code>
-          </pre>
-        </div>
-        `;
-    }
-  });
-  eleventyConfig.addPassthroughCopy({ "src/assets/css": "assets/css" });
-  eleventyConfig.addPassthroughCopy({ "src/assets/js": "assets/js" });
-  eleventyConfig.addPassthroughCopy({ "src/assets/fonts": "assets/fonts" });
-  eleventyConfig.addPassthroughCopy({ "src/assets/img": "assets/img" });
-
-  eleventyConfig.addCollection("categories", function (collectionApi) {
-    const categorias = new Set();
-    collectionApi.getAll().forEach(item => {
-      if (item.data.tags) {
-        item.data.tags.forEach(tag => { if (tag !== 'posts') categorias.add(tag) });
-      }
-    });
-    return [...categorias];
-  });
-
-  eleventyConfig.addFilter(
-    "fecha",
-    function (dateObj, formato = "dd LLL yyyy") {
-      if (formato === "localString") return DateTime.fromJSDate(dateObj, { zone: "utc" }).toLocaleString()
-      return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat(formato);
-    }
-  );
-
-  eleventyConfig.addFilter("yearCopyright", (startYear) => {
-    const currentYear = new Date().getFullYear();
-    return (parseInt(startYear) === currentYear)
-      ? `${currentYear}`
-      : `${startYear}–${currentYear}`;
-  });
-
-  addCompatibiltyMDX(eleventyConfig);
+  configurePlugins(eleventyConfig);
+  configurePassthroughCopy(eleventyConfig);
+  configureCollections(eleventyConfig);
+  configureFilters(eleventyConfig);
+  addMDXCompatibility(eleventyConfig);
 
   return {
     dir: {
@@ -57,8 +20,59 @@ export default function (eleventyConfig) {
   };
 }
 
-const addCompatibiltyMDX = (eleventyConfig) => {
-  // Añadir soporte para .mdx como páginas
+// Configuración de plugins
+function configurePlugins(eleventyConfig) {
+  eleventyConfig.addPlugin(syntaxHighlight, {
+    template: ({ content, language }) => `
+      <div class="code-wrapper">
+        <pre class="language-${language}">
+          <code>${content}</code>
+        </pre>
+      </div>
+    `,
+  });
+}
+
+// Configuración de archivos estáticos
+function configurePassthroughCopy(eleventyConfig) {
+  const assets = ["css", "js", "fonts", "img"];
+  assets.forEach((asset) => {
+    eleventyConfig.addPassthroughCopy({ [`src/assets/${asset}`]: `assets/${asset}` });
+  });
+}
+
+// Configuración de colecciones
+function configureCollections(eleventyConfig) {
+  eleventyConfig.addCollection("categories", (collectionApi) => {
+    const categories = new Set();
+    collectionApi.getAll().forEach((item) => {
+      if (item.data.tags) {
+        item.data.tags.forEach((tag) => {
+          if (tag !== "posts") categories.add(tag);
+        });
+      }
+    });
+    return [...categories];
+  });
+}
+
+// Configuración de filtros
+function configureFilters(eleventyConfig) {
+  eleventyConfig.addFilter("fecha", (dateObj, formato = "dd LLL yyyy") => {
+    const date = DateTime.fromJSDate(dateObj, { zone: "utc" });
+    return formato === "localString" ? date.toLocaleString() : date.toFormat(formato);
+  });
+
+  eleventyConfig.addFilter("yearCopyright", (startYear) => {
+    const currentYear = new Date().getFullYear();
+    return parseInt(startYear) === currentYear
+      ? `${currentYear}`
+      : `${startYear}–${currentYear}`;
+  });
+}
+
+// Compatibilidad con MDX
+function addMDXCompatibility(eleventyConfig) {
   eleventyConfig.addTemplateFormats("mdx");
 
   eleventyConfig.addExtension("mdx", {
@@ -87,4 +101,4 @@ const addCompatibiltyMDX = (eleventyConfig) => {
       return async () => html;
     },
   });
-};
+}
