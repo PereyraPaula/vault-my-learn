@@ -1,9 +1,12 @@
 <head>
-  <meta charset="UTF-8" />
-  <link rel="stylesheet" href="/assets/css/main.css" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="preload" href="/assets/fonts/Iosevka-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/Iosevka-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/main.css"/>
   <title>{{ title if title else site.title }}</title>
   {% if page.url.includes("/posts/") %}
-    <link href="/assets/css/prism-ghcolors.css" rel="stylesheet" />
+    <link href="/assets/css/prism-ghcolors.css" rel="stylesheet"/>
   {% endif %}
-  <meta name="description" content="{{ site.description }}" />
+  <meta name="description" content="{{ site.description }}"/>
 </head>
