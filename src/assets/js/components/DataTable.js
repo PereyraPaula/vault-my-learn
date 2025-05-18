@@ -9,7 +9,7 @@ class DataTable extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["data"];
+    return ["data", "font"];
   }
 
   attributeChangedCallback() {
@@ -37,11 +37,12 @@ class DataTable extends HTMLElement {
       table {
         width: 100%;
         border-collapse: collapse;
-        font-family: sans-serif;
+        font-family: ${this.getAttribute("font") || "Arial, sans-serif"};
       }
       thead {
         background-color: #333;
         color: #fff;
+        text-transform: uppercase;
       }
       th, td {
         border: 1px solid #ccc;
@@ -72,7 +73,7 @@ class DataTable extends HTMLElement {
       const tr = document.createElement("tr");
       headers.forEach((h) => {
         const td = document.createElement("td");
-        td.textContent = row[h];
+        td.innerHTML = row[h];
         tr.appendChild(td);
       });
       tbody.appendChild(tr);
