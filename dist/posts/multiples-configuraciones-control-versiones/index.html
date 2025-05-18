@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="preload" href="/assets/fonts/Iosevka-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/Iosevka-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/main.css"/>
+  <title>Gestionar múltiples configuraciones de servicios de control de versiones (GIT)</title>
+  
+    <link href="/assets/css/prism-ghcolors.css" rel="stylesheet"/>
+  
+  <meta name="description" content="Notas para ser utilizadas como referencia"/>
+</head>
+  <body>
+    <main class="grid">
+      <header class="col-left padding-x">
+  <hgroup>
+    <h2>Baúl de aprendizaje</h2>
+    <p>Notas para ser utilizadas como referencia</p>
+    <nav>
+      <ul>
+        <li><a class="" href="/categorias">Categorías</a></li>
+      </ul>
+    </nav>
+  </hgroup>
+  <footer>
+    <small class="text-muted">
+        <em>
+            Copyright &copy;2025. Todos los derechos reservados.
+        </em>
+    </small>
+</footer>
+</body>
+
+  <script type="module" src="/assets/js/main.js"></script>
+
+</html>
+</header>
+      <section class="col-right padding-x">
+        <main class="post">
+          <h1 class="title-post">Gestionar múltiples configuraciones de servicios de control de versiones (GIT)</h1>
+          <p class="text-muted">
+            <em>Publicado el 07 de January 2025</em>
+            <em>
+              
+                - por Paula Pereyra
+              
+            </em>
+          </p>
+          
+            <p>
+              Categorías:
+              
+                
+              
+                
+                  <a class="tags" href="/categoria/git/">git</a>
+                  
+                
+              
+            </p>
+          
+          <div class="post-content">
+            <p>Este blog se creó a partir de mi necesidad de tener más ordenadas las diferentes configuraciones de los servicios de control de versiones. Yo utilizo Gitlab para mi trabajo, Github para proyectos propios que quiero compartir, y <a href="https://gogs.io">Gogs</a> (que inició como prueba pero terminó siendo un lugar donde guardo configuraciones y backup de notas privadas junto con un familiar).</p>
+<p>A lo que voy, necesito tenerlo separado, porque sino es un lío, y si hay que realizar una modificación, si no se sabe bien qué se está tocando, se puede ocasionar un desastre 😅.</p>
+<p>Aquí tienes algunos pasos que puedes seguir, porque estuve investigando y es bastante sencillo.</p>
+<p>Importante saber: Git utiliza un archivo de configuración global (<code>~/.gitconfig</code>) donde puedes establecer parámetros que afectarán a todos los repositorios. Sin embargo, para manejar diferentes servicios, puedes establecer configuraciones específicas para cada repositorio. Esto incluye las credenciales (usuario y correo electrónico) y el remoto.</p>
+<h2><strong>Un servicio</strong></h2>
+<h3>Configuración global</h3>
+<p>Normalmente, si tienes un solo servicio, lo mejor es tener configuraciones globales, puedes establecer tu nombre y correo electrónico en tu archivo global <code>.gitconfig</code>. Por ejemplo:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> user.name <span class="token string">"Tu Nombre"</span>
+<span class="token function">git</span> config <span class="token parameter variable">--global</span> user.email <span class="token string">"tu.email@ejemplo.com"</span></code></pre>
+<p>Y se usará esa configuración para todos los repositorios que crees. Es más fácil.</p>
+<h2><strong>Más de un servicio</strong></h2>
+<h3>Opción 1: Configuración específica para cada repositorio</h3>
+<p>Puedes, aunque es más manual, para cada repositorio, establecer las configuraciones específicas que necesites.
+Navega a la carpeta del repositorio y ejecuta:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /ruta/a/tu/repositorio
+<span class="token function">git</span> config user.name <span class="token string">"Tu Nombre para Gogs"</span>
+<span class="token function">git</span> config user.email <span class="token string">"tu.email@gogs.com"</span></code></pre>
+<p>Haz lo mismo para los repositorios de GitHub y GitLab cuando trabajes en ellos.
+Lo tienes que hacer una vez, cuando creas el repositorio y vas a subir un cambio a remoto, y luego para los demás tomará la configuración que hayas puesto.</p>
+<p><strong>Importante: Configura los remotos</strong></p>
+<p>Cuando añadas un nuevo remoto, asegúrate de que apunte al servidor correcto. Por ejemplo, para un repositorio de Gogs, puedes añadir el remoto así:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token function">git</span> remote <span class="token function">add</span> origin https://gogs.ejemplo.com/usuario/repositorio.git</code></pre>
+<p>Para GitHub o GitLab, haz lo mismo:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token function">git</span> remote <span class="token function">add</span> origin https://github.com/usuario/repositorio.git</code></pre>
+<p>Así cuando hagas <code>git push origin rama</code> se subirá al repositorio referenciado en el <code>git remote</code> y con las configuración hecha a nivel repositorio.</p>
+<h3>Opción 2: Uso de SSH (opcional pero recomendado)</h3>
+<p>Si usas SSH para autenticarte, puedes crear diferentes claves SSH para cada servicio y configurar el archivo <code>~/.ssh/config</code> para gestionar las conexiones de forma más sencilla.</p>
+<ol>
+<li><strong>Generar claves SSH</strong> (si no tienes):</li>
+</ol>
+<pre class="language-bash"><code class="language-bash">ssh-keygen <span class="token parameter variable">-t</span> rsa <span class="token parameter variable">-b</span> <span class="token number">4096</span> <span class="token parameter variable">-C</span> <span class="token string">"tu.email@ejemplo.com"</span></code></pre>
+<ol start="2">
+<li><strong>Agregar las claves al agente SSH</strong>:</li>
+</ol>
+<pre class="language-bash"><code class="language-bash"><span class="token builtin class-name">eval</span> <span class="token string">"<span class="token variable"><span class="token variable">$(</span>ssh-agent <span class="token parameter variable">-s</span><span class="token variable">)</span></span>"</span>
+ssh-add ~/.ssh/id_rsa_gogs
+ssh-add ~/.ssh/id_rsa_github
+ssh-add ~/.ssh/id_rsa_gitlab</code></pre>
+<ol start="3">
+<li><strong>Configurar el archivo <code>~/.ssh/config</code></strong>:</li>
+</ol>
+<pre class="language-plaintext"><code class="language-plaintext"># Gogs
+Host gogs
+    HostName gogs.ejemplo.com
+    User git
+    IdentityFile ~/.ssh/id_rsa_gogs
+
+# GitHub
+Host github
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_rsa_github
+
+# GitLab
+Host gitlab
+    HostName gitlab.com
+    User git
+    IdentityFile ~/.ssh/id_rsa_gitlab</code></pre>
+<ol start="4">
+<li><strong>Usar los remotos con las configuraciones de SSH</strong>:</li>
+</ol>
+<p>En lugar de usar las URL HTTPS, puedes usar las configuraciones de SSH:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token function">git</span> remote <span class="token function">add</span> origin gogs:usuario/repositorio.git
+<span class="token function">git</span> remote <span class="token function">add</span> origin github:usuario/repositorio.git
+<span class="token function">git</span> remote <span class="token function">add</span> origin gitlab:usuario/repositorio.git</code></pre>
+<p>Con estos pasos, deberías poder gestionar tus repositorios en Gogs, GitHub y GitLab desde la misma máquina sin que se interfieran entre sí. Asegúrate de siempre estar en el directorio correcto antes de ejecutar comandos de Git y de haber configurado adecuadamente las credenciales y remotos para cada proyecto.</p>
+<hr>
+<p><strong>Bonus</strong>:
+Hablando de múltiple, pero en este caso de otras cuentas. Si quieres subir archivos (modificaciones) al repositorio de otra persona, puedes usar Git con credenciales temporales sin afectar tu configuración global.
+<strong>Tienes que tener en cuenta que esto es para cosas puntuales.</strong></p>
+<p>Usando la URL con credenciales directamente:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token function">git</span> remote set-url origin https://username:password@github.com/usuario/repositorio.git</code></pre>
+<p>Donde:
+<strong>username</strong>: el nombre de usuario de la otra persona
+<strong>password</strong>: un token de acceso personal de GitHub de la otra persona (no la contraseña directa)</p>
+<p>Para crear un token de acceso lo puedes seguir desde <a href="https://docs.github.com/es/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic">acá </a> de manera muy simple, y con solo darle al check en &quot;repo&quot; (darle acceso a las acciones sobre los repositorios), ya se pueden subir los cambios.</p>
+<hr>
+<p>Si hay algún comando que esté incorrecto, o quieres aportar en los comentarios, eres bienvenido :)</p>
+
+          </div>
+        </main>
+        <a href="/" class="button with-icon">
+          <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24">
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 12h14M5 12l6-6m-6 6 6 6"
+              style="--darkreader-inline-stroke:var(--darkreader-text-000000, #e8e6e3)"/>
+          </svg>
+          Volver a la pagina principal
+        </a>
+      </section>
+    </main>
+  </body>
+</html>

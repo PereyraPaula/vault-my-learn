@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="preload" href="/assets/fonts/Iosevka-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/Iosevka-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/main.css"/>
+  <title>NPM Link</title>
+  
+    <link href="/assets/css/prism-ghcolors.css" rel="stylesheet"/>
+  
+  <meta name="description" content="Notas para ser utilizadas como referencia"/>
+</head>
+  <body>
+    <main class="grid">
+      <header class="col-left padding-x">
+  <hgroup>
+    <h2>Baúl de aprendizaje</h2>
+    <p>Notas para ser utilizadas como referencia</p>
+    <nav>
+      <ul>
+        <li><a class="" href="/categorias">Categorías</a></li>
+      </ul>
+    </nav>
+  </hgroup>
+  <footer>
+    <small class="text-muted">
+        <em>
+            Copyright &copy;2025. Todos los derechos reservados.
+        </em>
+    </small>
+</footer>
+</body>
+
+  <script type="module" src="/assets/js/main.js"></script>
+
+</html>
+</header>
+      <section class="col-right padding-x">
+        <main class="post">
+          <h1 class="title-post">NPM Link</h1>
+          <p class="text-muted">
+            <em>Publicado el 23 de June 2024</em>
+            <em>
+              
+                - por Paula Pereyra
+              
+            </em>
+          </p>
+          
+            <p>
+              Categorías:
+              
+                
+              
+                
+                  <a class="tags" href="/categoria/node/">node</a>
+                  
+                
+              
+                
+                  <a class="tags" href="/categoria/npm/">npm</a>
+                  
+                
+              
+            </p>
+          
+          <div class="post-content">
+            <p>Este comando de node lo descubrí porque en el trabajo tenemos un paquete para manejar un módulo de la aplicación que creamos, y este modulo lo cargamos desde un paquete que manejamos aparte.</p>
+<p>Hasta hace unos días, la manera en que agregaba nuevas cambios a este paquete, era: hacer estos cambios, subirlos y publicar una nueva versión de la librería, y luego actualizaba el paquete en la aplicación principal, y verificaba que todo funcionara bien.</p>
+<p>Otra opción, sobre todo en cambios más chicos o puntuales, era realizar cambios en el el <code>node_modules</code> para verificar en la misma aplicación que funcionara todo bien y luego copiaba manualmente los cambios al repositorio de la dependencia una vez que haya terminado. Pero hay un enfoque mucho más claro: <code>npm link</code>.</p>
+<p>Esta manera es mucho más sencilla porque de manera local, ya puedes ver los cambios que vas realizando en la librería en la aplicación en la que la usas.</p>
+<h3>Uso</h3>
+<ol>
+<li>Se crea un enlace simbólico global para una dependencia con enlace npm. Seria un acceso directo que apunta a otro directorio o archivo de su sistema.</li>
+<li>Decirle a la aplicación que este enlace simbólico global con <code>npm link nombre-dependencia</code>.</li>
+</ol>
+<pre class="language-bash"><code class="language-bash"><span class="token builtin class-name">cd</span> path/to/your/module
+<span class="token function">npm</span> <span class="token function">link</span> <span class="token comment"># Crea un enlace simbólico global </span>
+
+<span class="token builtin class-name">cd</span> path/to/your/project
+<span class="token function">npm</span> <span class="token function">link</span> <span class="token operator">&lt;</span>module_name<span class="token operator">></span> <span class="token comment"># Linkea el módulo al proyecto</span></code></pre>
+<h3>Escenarios avanzados de enlace npm</h3>
+<p>Otro escenario, uno más complejo del ejemplo dicho anteriormente, podría ser vincular múltiples módulos locales o administrar dependencias entre estos módulos vinculados.</p>
+<p>Para este caso también podemos usar <code>npm link</code></p>
+<h4>Multiples módulos locales</h4>
+<p>Estás trabajando con dos modulos: module-a y module-b, donde module-b depende de module-a. Así se vincularía:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token builtin class-name">cd</span> path/to/module-a
+<span class="token function">npm</span> <span class="token function">link</span> <span class="token comment"># Registra el module-a globalmente</span>
+
+<span class="token builtin class-name">cd</span> <span class="token punctuation">..</span>/module-b
+<span class="token function">npm</span> <span class="token function">link</span> <span class="token comment"># Registra el module-b globalmente</span>
+<span class="token function">npm</span> <span class="token function">link</span> module-a <span class="token comment"># Links module-b with module-a</span></code></pre>
+<p>Con esta tecnica se puede desarrollar módulos que tienen dependencias entre sí, lo que permite pruebas e iteración en tiempo real.</p>
+<h4>Gestionar dependencias entre modulos vinculados</h4>
+<p>Un desafío común es garantizar que todos los módulos vinculados usen las últimas versiones entre sí. Para manejar esto, hay que usar regularmente <code>npm update</code> en cada directorio de módulos para obtener los últimos cambios de las dependencias. Además, re-correr <code>npm link</code> después de las actualizaciones asegura de que se está usando la versión más actual.</p>
+<h2>Alternativas al enlace npm</h2>
+<p>Aunque <code>npm link</code> da una solución sólida para el desarrollo y las pruebas de módulos locales, hay otros enfoques para diferentes necesidades y escenarios. No está de más describirlas, porque puede ayudar a elegir la mejor herramienta para los requisitos de sus proyectos.</p>
+<ul>
+<li><code>npm pack</code> <br>
+Permite ver el paquete generado antes de subirlo y que se publique. La salida es un archivo tarball (my-module-1.0.0.tgz) que se puede instalar en cualquier proyecto, lo que le permite probar el módulo como si se hubiera descargado del registro npm. Luego para instalar el paquete sería hacer: <code>npm install /path/to/my-module-1.0.0.tgz</code></li>
+<li>Herramientas de terceros:  <br>
+<code>yarn link</code> o <a href="https://lerna.js.org/">Lerna</a> parecen ser populares para desarrolladores que hacen monorepos o que administran múltiples módulos interdependientes.</li>
+</ul>
+<h2>Comparación entre npm link, npm pack y herramientas de terceros</h2>
+<p>Hice esta tabla para que puedas tener una referencia rápida de cual elegir, y cuales serían las ventajas y desventajas.</p>
+<p><data-table data='[{"utilidad": "npm link", "ventaja": "Desarrollo y las pruebas en tiempo real (Cambios inmediatos)", "desventaja": "Resulta complejo si se tienen muchos enlaces simbólicos globales y múltiples dependencias"}, {"utilidad": "npm pack", "ventaja": "Ideal para las pruebas finales (cercano a la implementación real)", "desventaja": "Requiere un poco más de esfuerzo manual para usarlo bien."}, {"utilidad": "Herramientas de terceros", "ventaja": "Adecuados para proyectos complejos", "desventaja": "- Características avanzada </br>- Curva de aprendizaje </br>- Requisitos de configuración"}]' font="Iosevka"></data-table></p>
+<hr style="height: .5px" />
+<p>Enlaces útiles:
+<a href="https://medium.com/dailyjs/how-to-use-npm-link-7375b6219557">Medium</a> |
+<a href="https://ioflood.com/blog/npm-link/">ioflood</a></p>
+
+          </div>
+        </main>
+        <a href="/" class="button with-icon">
+          <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24">
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 12h14M5 12l6-6m-6 6 6 6"
+              style="--darkreader-inline-stroke:var(--darkreader-text-000000, #e8e6e3)"/>
+          </svg>
+          Volver a la pagina principal
+        </a>
+      </section>
+    </main>
+  </body>
+</html>

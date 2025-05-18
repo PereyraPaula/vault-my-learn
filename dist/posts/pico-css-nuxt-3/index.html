@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="preload" href="/assets/fonts/Iosevka-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/Iosevka-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/main.css"/>
+  <title>Vue 3 - Pico.css - Agregar el Minimal CSS Framework a Nuxt 3</title>
+  
+    <link href="/assets/css/prism-ghcolors.css" rel="stylesheet"/>
+  
+  <meta name="description" content="Notas para ser utilizadas como referencia"/>
+</head>
+  <body>
+    <main class="grid">
+      <header class="col-left padding-x">
+  <hgroup>
+    <h2>Baúl de aprendizaje</h2>
+    <p>Notas para ser utilizadas como referencia</p>
+    <nav>
+      <ul>
+        <li><a class="" href="/categorias">Categorías</a></li>
+      </ul>
+    </nav>
+  </hgroup>
+  <footer>
+    <small class="text-muted">
+        <em>
+            Copyright &copy;2025. Todos los derechos reservados.
+        </em>
+    </small>
+</footer>
+</body>
+
+  <script type="module" src="/assets/js/main.js"></script>
+
+</html>
+</header>
+      <section class="col-right padding-x">
+        <main class="post">
+          <h1 class="title-post">Vue 3 - Pico.css - Agregar el Minimal CSS Framework a Nuxt 3</h1>
+          <p class="text-muted">
+            <em>Publicado el 26 de February 2024</em>
+            <em>
+              
+                - por Paula Pereyra
+              
+            </em>
+          </p>
+          
+            <p>
+              Categorías:
+              
+                
+              
+                
+                  <a class="tags" href="/categoria/vue/">vue</a>
+                  
+                
+              
+                
+                  <a class="tags" href="/categoria/picocss/">picocss</a>
+                  
+                
+              
+                
+                  <a class="tags" href="/categoria/css/">css</a>
+                  
+                
+              
+                
+                  <a class="tags" href="/categoria/web/">web</a>
+                  
+                
+              
+            </p>
+          
+          <div class="post-content">
+            <h2>Introducción</h2>
+<p>En este artículo, mostraré cómo agregar Pico.css a un proyecto hecho con Nuxt 3. Tengo que aclarar que esta es una manera que encontré yo de que funcione, porque realicé una larga búsqueda y no encontré otro articulo que enseñe como añadirlo (quería compartirlo por si alguien quiere usarlo en algún proyecto que esté realizando). Este será un artículo breve ya que no requiere mucho trabajo.</p>
+<p>PD: Asumo que el proyecto hecho con nuxt ya está creado, pero sino, es solo ir a la <a href="https://nuxt.com/docs/getting-started/installation">documentación oficial</a> y corremos el comando en la consola (en el directorio que quieran) <code>npx nuxi@latest init &lt;project-name&gt;</code> para crear un nuevo proyecto inicial (Se necesita tener instalado Node.js - v18.0.0 o más reciente).</p>
+<h2>Instalar Pico.css</h2>
+<p>Vamos a la <a href="https://picocss.com/">pagina oficial</a>, y buscamos la sección &quot;Getting Started&quot;</p>
+<p>Vamos a la sección <code>Install with NPM</code> y elegimos el comando que queramos para instalar la dependencia en el proyecto, segun el gestor de paquetes que estemos usando (npm, yarn, pnpm)</p>
+<p>Una vez instalado, lo podemos verificar en nuestro <code>package.json</code>:</p>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"@picocss/pico"</span><span class="token operator">:</span> <span class="token string">"^2.0.3"</span>
+<span class="token punctuation">}</span></code></pre>
+<h2>Añadirlo al proyecto con Nuxt</h2>
+<p>Como sabemos, cuando instalamos una dependencia, esta se agrega a los <code>node_modules</code>, es algo a tener en cuenta para después.</p>
+<p>Antes que nada, hay que crear un archivo dentro de esta estructura:
+<code>assets/css/app.css</code> (Esto dentro de la raíz del proyecto).
+Dentro de este archivo, hay que escribir lo siguiente:</p>
+<pre class="language-css"><code class="language-css"><span class="token atrule"><span class="token rule">@import</span> <span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span></code></pre>
+<p>Dentro de ese import tenemos que poner la ruta de un archivo &quot;pico.css&quot; que se encuentra dentro del node_modules. Quedaría algo así:</p>
+<pre class="language-css"><code class="language-css"><span class="token atrule"><span class="token rule">@import</span> <span class="token url"><span class="token function">url</span><span class="token punctuation">(</span><span class="token string url">"@picocss/pico/css/pico.css"</span><span class="token punctuation">)</span></span><span class="token punctuation">;</span></span></code></pre>
+<p>Ahora ya podemos arrancar nuestro proyecto, en mi caso con <code>pnpm run dev</code>, y tendremos ya el estilo de Pico:</p>
+<p><img src="/assets/img/nuxt-3-pico-css.png" alt="Preview aplicación corriendo"></p>
+<p>Espero que les haya funcionado. Hasta el próximo blog. 👋</p>
+
+          </div>
+        </main>
+        <a href="/" class="button with-icon">
+          <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24">
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 12h14M5 12l6-6m-6 6 6 6"
+              style="--darkreader-inline-stroke:var(--darkreader-text-000000, #e8e6e3)"/>
+          </svg>
+          Volver a la pagina principal
+        </a>
+      </section>
+    </main>
+  </body>
+</html>
