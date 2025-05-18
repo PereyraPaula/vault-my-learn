@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "eleventy --output=docs",
+    "build": "eleventy --output=docs --pathprefix='/vault-my-learn/'",
     "start": "rm -Rf dist && eleventy --serve"
   },
   "keywords": [],
