@@ -6,5 +6,7 @@
     </small>
 </footer>
 </body>
-<script type="module" src="/assets/js/main.js"></script>
+{% if page.url.includes("/posts/") %}
+  <script type="module" src="/assets/js/main.js"></script>
+{% endif %}
 </html>
