@@ -1,3 +1,4 @@
+import { EleventyHtmlBasePlugin } from "@11ty/eleventy";
 import { compile } from "@mdx-js/mdx";
 import { DateTime } from "luxon";
 import { unified } from "unified";
@@ -6,6 +7,7 @@ import remarkParse from "remark-parse";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 
 export default function (eleventyConfig) {
+  eleventyConfig.addPlugin(EleventyHtmlBasePlugin);  
   configurePlugins(eleventyConfig);
   configurePassthroughCopy(eleventyConfig);
   configureCollections(eleventyConfig);
@@ -13,9 +15,10 @@ export default function (eleventyConfig) {
   addMDXCompatibility(eleventyConfig);
 
   return {
+    pathPrefix: "/vault-my-learn/",
     dir: {
       input: "src",
-      output: "dist",
+      output: "docs"
     },
   };
 }
